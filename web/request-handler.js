@@ -1,11 +1,36 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
 var fs = require('fs');
-// require more modules/folders here!
-var userInterface = fs.readFileSync('./public/index.html');
-exports.handleRequest = function (req, res) {
+var qs = require('querystring');
+var serveAssets = require('./http-helpers');
 
-  res.end(userInterface);
+// var userInterface = fs.readFile('./public/index.html', function(err,data){
+//   if(err) {
+//     throw err;
+//   } else {
+//     data = data;
+//     console.log('data---->', qs.parse(data))
+//   }
+// });
+
+
+exports.handleRequest = function (req, res) {
+  // console.log('----->req', req.method)
+  // console.log('----->req url', req.url)
+  if(req.method === 'GET' && req.url === '/') {
+  //   //serve file
+    fs.readFile(__dirname + '/index.html', function(err, data) {
+      if(err) {
+        console.log('err',err);
+      } else {
+        res.end(data.toString());
+      }
+    });
+
+
+
+  }
+  // res.end(archives.paths.list);
 };
 
 //serve HTML file
